@@ -1,10 +1,12 @@
-import Component.Component as Component exposing (..)
+module Main exposing (..)
 
+import Component.Component as Component exposing (..)
 import Html exposing (..)
 import Html.App
 
 
 -- MODEL
+
 
 type alias Model =
     { component : Component.State
@@ -19,7 +21,9 @@ initialModel =
     }
 
 
+
 -- UPDATE
+
 
 type Msg
     = Component Component.Msg
@@ -34,7 +38,7 @@ update msg model =
                 config =
                     Component.updateConfig { onSelect = Selected }
 
-                (component, msg) =
+                ( component, msg ) =
                     Component.update config componentMsg model.component
 
                 model =
@@ -49,12 +53,15 @@ update msg model =
 
         Selected id ->
             let
-                _ = Debug.log "selected" id
+                _ =
+                    Debug.log "selected" id
             in
                 model
 
 
+
 -- VIEW
+
 
 view : Model -> Html Msg
 view model =
@@ -62,10 +69,13 @@ view model =
         config =
             Component.viewConfig { toId = identity }
     in
-        Html.App.map Component (Component.view config model.component model.data)
+        Component.view config model.component model.data
+            |> Html.App.map Component
+
 
 
 -- MAIN
+
 
 main : Program Never
 main =
